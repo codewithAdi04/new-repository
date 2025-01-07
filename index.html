@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Interactive Calculator</title>
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and Background Animation */
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff6a00, #ee0979, #ff00b3, #00c6ff);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        /* Keyframes for Background Animation */
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Calculator Container */
+        .calculator {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            width: 360px;
+        }
+
+        /* Display Styling */
+        .display {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: right;
+            padding: 15px;
+            background-color: #222;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            word-wrap: break-word;
+        }
+
+        /* Button Grid Layout */
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        /* Button Styles */
+        .button {
+            padding: 20px;
+            font-size: 1.6em;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hover and Active Button States */
+        .button:hover {
+            background-color: #ddd;
+            transform: translateY(-4px);
+        }
+        .button:active {
+            background-color: #ccc;
+            transform: translateY(2px);
+        }
+
+        /* Operator Button Styling */
+        .button.operator {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .button.operator:hover {
+            background-color: #45a049;
+        }
+
+        .button.clear {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .button.clear:hover {
+            background-color: #e53935;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .calculator {
+                width: 90%;
+                padding: 20px;
+            }
+            .display {
+                font-size: 2em;
+            }
+            .button {
+                font-size: 1.4em;
+                padding: 18px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+        <button class="button clear" onclick="clearDisplay()">C</button>
+        <button class="button operator" onclick="appendToDisplay('/')">/</button>
+        <button class="button operator" onclick="appendToDisplay('*')">*</button>
+        <button class="button operator" onclick="appendToDisplay('-')">-</button>
+
+        <button class="button" onclick="appendToDisplay('7')">7</button>
+        <button class="button" onclick="appendToDisplay('8')">8</button>
+        <button class="button" onclick="appendToDisplay('9')">9</button>
+        <button class="button operator" onclick="appendToDisplay('+')">+</button>
+
+        <button class="button" onclick="appendToDisplay('4')">4</button>
+        <button class="button" onclick="appendToDisplay('5')">5</button>
+        <button class="button" onclick="appendToDisplay('6')">6</button>
+        <button class="button operator" onclick="calculate()">=</button>
+
+        <button class="button" onclick="appendToDisplay('1')">1</button>
+        <button class="button" onclick="appendToDisplay('2')">2</button>
+        <button class="button" onclick="appendToDisplay('3')">3</button>
+        <button class="button operator" onclick="appendToDisplay('.')">.</button>
+
+        <button class="button" onclick="appendToDisplay('0')">0</button>
+        <button class="button" onclick="appendToDisplay('00')">00</button>
+        <button class="button" onclick="appendToDisplay('(')">(</button>
+        <button class="button" onclick="appendToDisplay(')')">)</button>
+    </div>
+</div>
+
+<script>
+    let display = document.getElementById('display');
+    let currentInput = '0';
+    
+    function clearDisplay() {
+        currentInput = '0';
+        display.innerText = currentInput;
+    }
+
+    function appendToDisplay(value) {
+        if (currentInput === '0' && value !== '.') {
+            currentInput = value;
+        } else {
+            currentInput += value;
+        }
+        display.innerText = currentInput;
+    }
+
+    function calculate() {
+        try {
+            currentInput = eval(currentInput).toString();
+            display.innerText = currentInput;
+        } catch (e) {
+            display.innerText = 'Error';
+            currentInput = '0';
+        }
+    }
+</script>
+
+</body>
+</html>
